@@ -4,10 +4,10 @@ from postgresql_context_manager.cm import OpenPostgre
 with open('.\\access_data.txt', mode='r') as file:
     line = file.readline()
     access_data = {
+        'host': None,
         'dbname': None,
         'user': None,
-        'password': None,
-        'host': None
+        'password': None
     }
     line = line.split(',')
     counter = 0
@@ -19,7 +19,9 @@ with open('.\\access_data.txt', mode='r') as file:
 with OpenPostgre(**access_data) as cursor:
     # SQL Query
     query = """
-    select * from empresas;
+    select p.id, p.descricao, p.preco, tp.descricao
+    from produtos as p, tipos_produtos as tp
+    where p.id_tipo_produto = tp.id;
     """
     # Executing the query
     cursor.execute(query)

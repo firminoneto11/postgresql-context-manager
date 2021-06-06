@@ -1,21 +1,21 @@
-import psycopg2
+import psycopg2 as pgadmin
 
 
 class OpenPostgre:
 
     def __init__(self, dbname, user, password, host):
         # Data to access the database
+        self.host = host
         self.dbname = dbname
         self.user = user
         self.password = password
-        self.host = host
 
         # Making a connection
-        self.connection = psycopg2.connect(
+        self.connection = pgadmin.connect(
+            host=self.host,
             dbname=self.dbname,
             user=self.user,
-            password=self.password,
-            host=self.host
+            password=self.password
         )
 
         # Creating the cursor
@@ -26,6 +26,7 @@ class OpenPostgre:
         return self.cursor
 
     def __iter__(self):
+        # Returning the items fetched by select statements
         for item in self.cursor:
             yield item
 

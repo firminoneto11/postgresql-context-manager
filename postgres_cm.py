@@ -1,7 +1,7 @@
 import psycopg2 as pgadmin
 
 
-class OpenPostgre:
+class OpenPostgres:
 
     def __init__(self, dbname, user, password, host):
         # Data to access the database
